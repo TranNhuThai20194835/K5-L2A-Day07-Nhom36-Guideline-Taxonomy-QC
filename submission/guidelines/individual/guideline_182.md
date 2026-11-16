@@ -26,7 +26,7 @@ Nhãn dùng để huấn luyện mô hình phát hiện **người và phương 
 | `van` | Xe thùng kín cỡ nhỏ, hình hộp chữ nhật | xe 16 chỗ, xe van chở hàng| xe bus,  car|
 | `motorcycle` | Xe 2 bánh, có động cơ.|xe máy, xe phân khối lớn| xe đạp|
 | `person` | Người. |người đang đứng, người đi bộ,người đi xe máy||
-| `ignore_region` | Vùng không cần gán từng vật. |bầu trời.đường,cây||
+| `ignore_region` | Vùng không cần gán từng vật. |nhóm người đứng cạnh nhau, vật bị mờ |
 
 ### Thuộc tính
 
