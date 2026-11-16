@@ -1,6 +1,6 @@
 # Thông tin nhóm
 
-- Tên nhóm: Nhom36
+- Tên nhóm: Nhóm 36
 - Repo bài nộp (URL):https://github.com/TranNhuThai20194835/K5-L2A-Day07-Nhom36-Guideline-Taxonomy-QC.git
 - Commit chốt bài (hash):
 - Số thành viên: 2  → số người gán mỗi ảnh (K): 1
