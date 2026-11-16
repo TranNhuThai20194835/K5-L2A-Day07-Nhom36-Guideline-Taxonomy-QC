@@ -1,0 +1,141 @@
+{
+  "taxonomy_version": "v1.0",
+  "thresholds": {
+    "iaa_iou": 0.85,
+    "iaa_class": 0.95,
+    "match_iou": 0.5
+  },
+  "n_annotators": 4,
+  "n_images_compared": 40,
+  "images_with_lt2_annotators": [],
+  "overall": {
+    "n_images": 40,
+    "n_matched_pairs": 233,
+    "n_unmatched_a": 96,
+    "n_unmatched_b": 42,
+    "n_skipped_in_ignore": 71,
+    "mean_iou": 0.8259476212000327,
+    "class_agreement": 0.9527896995708155,
+    "attr_agreement": {
+      "occluded_level": 0.48497854077253216,
+      "truncated": 0.9227467811158798
+    },
+    "n_below_iou_thr": 102,
+    "iou_pass": false,
+    "class_pass": true,
+    "pass": false
+  },
+  "per_pair": {
+    "182|184": {
+      "n_images": 6,
+      "n_matched_pairs": 24,
+      "n_unmatched_a": 4,
+      "n_unmatched_b": 4,
+      "n_skipped_in_ignore": 5,
+      "mean_iou": 0.7740290015149345,
+      "class_agreement": 0.875,
+      "attr_agreement": {
+        "occluded_level": 0.625,
+        "truncated": 1.0
+      },
+      "n_below_iou_thr": 15,
+      "iou_pass": false,
+      "class_pass": false,
+      "pass": false
+    },
+    "182|207": {
+      "n_images": 9,
+      "n_matched_pairs": 61,
+      "n_unmatched_a": 27,
+      "n_unmatched_b": 4,
+      "n_skipped_in_ignore": 7,
+      "mean_iou": 0.8192747382459411,
+      "class_agreement": 0.9836065573770492,
+      "attr_agreement": {
+        "occluded_level": 0.39344262295081966,
+        "truncated": 0.8852459016393442
+      },
+      "n_below_iou_thr": 26,
+      "iou_pass": false,
+      "class_pass": true,
+      "pass": false
+    },
+    "182|213": {
+      "n_images": 5,
+      "n_matched_pairs": 36,
+      "n_unmatched_a": 28,
+      "n_unmatched_b": 9,
+      "n_skipped_in_ignore": 0,
+      "mean_iou": 0.8061885241225739,
+      "class_agreement": 0.8888888888888888,
+      "attr_agreement": {
+        "occluded_level": 0.3611111111111111,
+        "truncated": 0.8888888888888888
+      },
+      "n_below_iou_thr": 21,
+      "iou_pass": false,
+      "class_pass": false,
+      "pass": false
+    },
+    "184|207": {
+      "n_images": 5,
+      "n_matched_pairs": 33,
+      "n_unmatched_a": 15,
+      "n_unmatched_b": 5,
+      "n_skipped_in_ignore": 2,
+      "mean_iou": 0.8152701376131961,
+      "class_agreement": 0.9393939393939394,
+      "attr_agreement": {
+        "occluded_level": 0.5757575757575758,
+        "truncated": 0.9696969696969697
+      },
+      "n_below_iou_thr": 15,
+      "iou_pass": false,
+      "class_pass": false,
+      "pass": false
+    },
+    "184|213": {
+      "n_images": 9,
+      "n_matched_pairs": 58,
+      "n_unmatched_a": 17,
+      "n_unmatched_b": 3,
+      "n_skipped_in_ignore": 29,
+      "mean_iou": 0.8798141808840959,
+      "class_agreement": 1.0,
+      "attr_agreement": {
+        "occluded_level": 0.5172413793103449,
+        "truncated": 0.896551724137931
+      },
+      "n_below_iou_thr": 16,
+      "iou_pass": true,
+      "class_pass": true,
+      "pass": true
+    },
+    "207|213": {
+      "n_images": 6,
+      "n_matched_pairs": 21,
+      "n_unmatched_a": 5,
+      "n_unmatched_b": 17,
+      "n_skipped_in_ignore": 28,
+      "mean_iou": 0.8065436556819598,
+      "class_agreement": 0.9523809523809523,
+      "attr_agreement": {
+        "occluded_level": 0.5714285714285714,
+        "truncated": 1.0
+      },
+      "n_below_iou_thr": 9,
+      "iou_pass": false,
+      "class_pass": true,
+      "pass": false
+    }
+  },
+  "n_issues": 376,
+  "issues_by_type": {
+    "bo_sot_thua": 138,
+    "iou_thap": 102,
+    "sai_thuoc_tinh": 122,
+    "co_can_review": 3,
+    "sai_lop": 11
+  },
+  "n_flagged_images": 35
+}
