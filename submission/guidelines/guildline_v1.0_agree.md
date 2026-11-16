@@ -19,7 +19,7 @@ Nhãn dùng để huấn luyện mô hình phát hiện **người và phương 
 | `truck` | Xe tải, xe chở hàng có thùng hàng rời cabin hoặc cỡ lớn |
 | `van` | Xe thùng kín cỡ nhỏ, cabin liền thùng |
 | `motorcycle` | Xe máy, mô tô, xe tay ga |
-| `person` | Người (cả người ngồi trên xe máy) git |
+| `person` | Người (cả người ngồi trên xe máy) |
 | `ignore_region` | Vùng không cần gán từng vật. |
 
 ### Thuộc tính
@@ -54,6 +54,7 @@ Người ngồi trên xe máy thì có nên gán riêng người vá xe không h
 trong ảnh có xuất hiện xe bus thì gán nhãn là car hay van hay không cần gán nhãn
 Vật trưng bày là Motorcycle thì có gán nhãn không
 Tượng người thì có cần gán nhãn person không
+Ảnh 33 ma nơ canh thì không gán là person
 
 ## 5. QC và phiên bản
 
