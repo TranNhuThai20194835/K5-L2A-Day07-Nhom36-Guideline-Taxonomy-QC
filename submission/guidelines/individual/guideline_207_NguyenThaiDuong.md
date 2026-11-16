@@ -29,4 +29,31 @@ Phép thử: mô hình có phải đoán ra điều này không? Có → lớp. 
 | `truncated` | no / yes | yes khi [...] |
 | `can_review` | tick / không | tick khi [...] |
 
-## 3. Quy tắc vẽ
+## 3. Quy tắc vẽ box
+1. Ôm sát: [vẽ phần nhìn thấy hay đoán cả phần bị che?]
+2. Bị che: [...]
+3. Cắt mép ảnh: [...]
+4. Người ngồi trên xe máy / xe đạp: [mấy box? box người có gồm xe không?]
+5. Xe chở xe / chở hàng: [...]
+6. Vật không thật (tượng, ma-nơ-canh, hình in, áp phích, phản chiếu trong kính): [...]
+7. Vật nhỏ (cao < 20 px), đám đông, xe đỗ dày đặc: [gán từng vật hay vẽ ignore_region?]
+8. Ảnh nhoè / tối: [...]
+
+## 4. Ca khó (tự tìm trong 40 ảnh)
+| Ảnh | Tình huống | Quyết định của tôi | Lý do |
+|---|---|---|---|
+| img_0xx | [...] | [...] | [...] |
+| img_0xx | [...] | [...] | [...] |
+| img_0xx | [...] | [...] | [...] |
+
+Chưa chốt, cần họp:
+- [...]
+
+## 5. QC và phiên bản
+- Mọi thay đổi làm đổi nhãn đều tăng phiên bản.
+- Ca mơ hồ: tick `can_review`, ghi chú để mang ra calibration.
+
+| Phiên bản | Thay đổi | Vì ca nào |
+|---|---|---|
+| v0 | Bản giảng viên | — |
+| v0.1-207 | [...] | [img_0xx] |
