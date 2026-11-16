@@ -48,9 +48,10 @@ Nhãn dùng để huấn luyện mô hình phát hiện **người và phương 
 
 ## 4. Ca khó
 
-- xe bán tải chế , xe đạp, xe bus.
--
--
+Xe tuk-tuk ở ảnh 4 không biết nên gán là class car, truck hay motorcycle 
+Người ngồi trên xe máy thì có nên gán riêng người vá xe không hay gán chung là motorcycle 
+trong ảnh có xuất hiện xe bus thì gán nhãn là car hay van hay không cần gán nhãn 
+Vật trưng bày giống Motorcycle thì có gán nhãn không
 
 ## 5. QC và phiên bản
 
