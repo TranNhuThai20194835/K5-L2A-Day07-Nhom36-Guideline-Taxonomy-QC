@@ -25,7 +25,7 @@ Nhãn dùng để huấn luyện mô hình phát hiện **người và phương 
 | `truck` | Xe tải, xe chở hàng có thùng hàng rời cabin hoặc cỡ lớn |
 | `van` | Xe thùng kín cỡ nhỏ, cabin liền thùng |
 | `motorcycle` | Xe máy, mô tô, xe tay ga |
-| `person` | Người (cả người ngồi trên xe máy) |
+| `person` | Người (cả người ngồi trên xe máy) git |
 | `ignore_region` | Vùng không cần gán từng vật. |
 
 ### Thuộc tính
@@ -55,7 +55,10 @@ Nhãn dùng để huấn luyện mô hình phát hiện **người và phương 
 
 ## 4. Ca khó
 
-(chưa có)
+Xe tuk-tuk ở ảnh 4 không biết nên gán là class car, truck hay motorcycle
+Người ngồi trên xe máy thì có nên gán riêng người vá xe không hay gán chung là motorcycle
+trong ảnh có xuất hiện xe bus thì gán nhãn là car hay van hay không cần gán nhãn
+Vật trưng bày là Motorcycle thì có gán nhãn không
 
 ## 5. QC và phiên bản
 
