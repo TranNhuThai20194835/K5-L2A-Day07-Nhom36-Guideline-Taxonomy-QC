@@ -1,15 +1,15 @@
 # Thông tin nhóm
 
-- Tên nhóm:
-- Repo bài nộp (URL):
+- Tên nhóm: Nhom36
+- Repo bài nộp (URL):https://github.com/TranNhuThai20194835/K5-L2A-Day07-Nhom36-Guideline-Taxonomy-QC.git
 - Commit chốt bài (hash):
-- Số thành viên: …  → số người gán mỗi ảnh (K): …
+- Số thành viên: 2  → số người gán mỗi ảnh (K): 1
 
 | STT | MSHV | Họ và tên | Lớp (L2 / L3 / khác) | Tài khoản GitHub |
 |---|---|---|---|---|
 | 1 | | | | |
-| 2 | | | | |
-| 3 | | | | |
+| 2 |2A202603184 |Trần Như Thái |L2 |TranNhuThai20194835 |
+
 
 Danh sách trên phải khớp dòng tiêu đề của `README.md` (đã đổi theo [SUBMISSION.md](SUBMISSION.md)) và `--members` đã dùng ở `scripts/split_assign.py`.
 
