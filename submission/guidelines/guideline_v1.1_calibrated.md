@@ -4,7 +4,7 @@
 - Dựa trên: `guideline_v1.0_agreed.md`, `submission/qc/iaa_summary.md`, `submission/qc/calibration_candidates.csv`, `submission/qc/calibration_decisions.csv`
 - Loại nhãn: bounding box trên ảnh đường phố · CVAT · COCO 1.0
 - Ngày: 17/11/2026
-- Taxonomy: không đổi lớp và thuộc tính (vẫn 6 lớp như v1.0) <!-- CHỐT: nếu nhóm thêm lớp (vd. bus, tuk_tuk) thì sửa dòng này và tăng version trong taxonomy.json -->
+- Taxonomy: không đổi lớp và thuộc tính (vẫn 6 lớp như v1.0, không thêm lớp mới)
 
 > **Vì sao có v1.1.** Lần gán đầu theo v1.0 **chưa đạt IAA**: IoU trung bình 0.826 (ngưỡng 0.85),
 > cùng lớp 95.3% (ngưỡng 95%), nhưng **cùng `occluded_level` chỉ 48.5%**. Có 376 ca bất thường trên 35/40 ảnh:
@@ -16,7 +16,7 @@
 ## 1. Mục tiêu
 
 Nhãn dùng để huấn luyện mô hình phát hiện **người và phương tiện thật đang có mặt trên đường**
-(camera giao thông, xe tự lái). Thứ gì mô hình không nên học là người/xe thật (hình in, tượng, ma-nơ-canh, phản chiếu) thì không gán.
+(camera giao thông, xe tự lái). Thứ gì mô hình không nên học là người/xe thật (hình in, tượng, ma-nơ-canh, phản chiếu) thì không gán. Phương tiện ngoài phạm vi (tuk-tuk, xe đạp) cũng không gán (mục 2.1).
 
 ## 2. Lớp và thuộc tính
 
@@ -24,7 +24,7 @@ Nhãn dùng để huấn luyện mô hình phát hiện **người và phương 
 
 | Lớp | Định nghĩa | Không phải lớp này |
 |---|---|---|
-| `car` | Ô tô con chở người: sedan, hatchback, SUV, MPV, taxi, bán tải cỡ nhỏ | Xe có thùng hàng rời cabin cỡ lớn → `truck` |
+| `car` | Ô tô chở người: sedan, hatchback, SUV, MPV, taxi, bán tải cỡ nhỏ, **và xe buýt** (quy ước v1.1) | Xe có thùng hàng rời cabin cỡ lớn → `truck` |
 | `truck` | Xe tải, xe chở hàng có thùng hàng **rời cabin**, hoặc xe cỡ lớn chở hàng (kể cả đầu kéo + rơ-moóc nối liền) | Bán tải nhỏ dùng chở người → `car` |
 | `van` | Xe thùng kín cỡ nhỏ, **cabin liền thùng**, thân cao hình hộp (xe 7–16 chỗ, xe giao hàng thùng kín nhỏ) | SUV/MPV thân thấp → `car` |
 | `motorcycle` | Xe máy, mô tô, xe tay ga (2 bánh có động cơ) | |
@@ -33,6 +33,7 @@ Nhãn dùng để huấn luyện mô hình phát hiện **người và phương 
 
 **[MỚI v1.1] Phân biệt car / van / truck** (8/11 ca lệch lớp nằm ở đây: car↔van 4, car↔truck 4).
 Hỏi theo thứ tự, dừng ở câu đầu tiên trả lời "có":
+0. Là **xe buýt**? → `car` (quy ước v1.1)
 1. Có **thùng hàng tách rời cabin** (nhìn thấy khe/vách giữa cabin và thùng) hoặc xe cỡ lớn chở hàng? → `truck`
 2. Thân xe **cao, hình hộp, cabin liền khoang chở** (nóc gần như phẳng kéo dài tới đuôi)? → `van`
 3. Còn lại → `car`
@@ -43,12 +44,12 @@ Vẫn phân vân sau 3 câu → chọn theo câu trả lời gần nhất và ti
 
 | Loại | Quyết định v1.1 |
 |---|---|
-| Xe tuk-tuk / xe ba bánh chở khách | **CHỐT:** ☐ `motorcycle` ☐ `car` ☐ thêm lớp mới `tuk_tuk` |
-| Xe ba gác, xe máy chế chở hàng | **CHỐT:** ☐ `motorcycle` ☐ `truck` |
-| Xe buýt | **CHỐT:** ☐ `truck` (xe cỡ lớn) ☐ `van` ☐ thêm lớp `bus` |
-| Xe đạp | **CHỐT:** ☐ không gán ☐ `motorcycle` ☐ thêm lớp `bicycle` |
+| Xe tuk-tuk / xe ba bánh chở khách | **Không gán** box cho xe. Người lái/khách nhìn thấy được vẫn gán `person` theo quy tắc chung |
+| Xe ba gác, xe máy chế chở hàng | `motorcycle` (một box bao cả xe và thùng chở hàng gắn liền) |
+| Xe buýt | `car` |
+| Xe đạp | **Không gán** box cho xe. Người đi xe đạp vẫn gán `person` |
 
-Nếu thêm lớp mới: sửa `submission/taxonomy.json` (tăng `version`), chạy `python scripts/make_cvat_labels.py`, ghi vào bảng lịch sử ở mục 5.
+Không thêm lớp mới, nên `taxonomy.json` giữ nguyên.
 
 ### 2.2 Thuộc tính
 
@@ -76,14 +77,8 @@ Lệch thuộc tính là nguồn lệch lớn thứ hai (120 ca lệch `occluded
 2. Ước lượng phần bị **vật khác** che trên tổng thể đó. Phần nằm ngoài khung ảnh **không** tính vào occluded (đã có `truncated`).
 3. Mẹo cho `person`: chia người thành 3 phần gần bằng nhau: **đầu–vai / thân / chân**.
    Che 1 phần ≈ mức 1–2, che 2 phần ≈ mức 2, chỉ còn thấy đầu ≈ mức 3.
-   <!-- CHỐT: nhóm xác nhận mẹo này hoặc thay bằng cách khác -->
-4. Người ngồi sau bàn, sau xe, trong xe (thấy qua kính): kính trong suốt **không** tính là che; khung xe, cửa, bàn thì tính.
-   <!-- CHỐT: nhóm xác nhận quy tắc kính -->
+4. Người ngồi sau bàn, sau xe, trong xe: phần nhìn thấy **qua kính** (kính xe, cửa kính) **vẫn tính là bị che**, giống khung xe, cửa, bàn.
 5. Phân vân giữa hai mức liền nhau → chọn mức **cao hơn** và tick `can_review`.
-   <!-- CHỐT: chọn mức cao hơn hay thấp hơn -->
-
-**Ảnh mẫu cho từng mức** (nhóm điền sau khi xem `work/viz/`):
-- Mức 0: img_0__ · Mức 1: img_0__ · Mức 2: img_0__ · Mức 3: img_0__
 
 ## 3. Quy tắc vẽ box
 
@@ -101,24 +96,20 @@ Lệch thuộc tính là nguồn lệch lớn thứ hai (120 ca lệch `occluded
    - Trước khi sang ảnh khác, quét ảnh theo **4 góc + nền phía sau**: người ngồi trong quán, người phía sau xe, xe đỗ ở xa, xe máy dựng bên đường.
    - Người/xe bị cắt ở mép ảnh vẫn gán (kèm `truncated = yes`).
 9. **[MỚI v1.1] Xe chở xe** (ví dụ xe tải chở ô tô): mỗi xe thật nhận diện được có **box riêng**: xe chở là một box, mỗi xe được chở là một box.
-   <!-- CHỐT: nhóm xác nhận (ca nêu trong guideline_213 mục 4) -->
-10. **[MỚI v1.1] Vật nhoè do chuyển động**:
-    **CHỐT:** ☐ vẫn gán nếu nhận ra là người/xe, box bao vùng nhoè chính ☐ cho vào `ignore_region` ☐ không gán
-11. **[MỚI v1.1] Tượng, ma-nơ-canh, xe trưng bày đứng yên trong cửa hàng**:
-    **CHỐT:** tượng/ma-nơ-canh ☐ không gán · xe trưng bày ☐ gán ☐ không gán
+10. **[MỚI v1.1] Vật nhoè do chuyển động**: không gán box riêng, khoanh vùng nhoè bằng `ignore_region`.
+11. **[MỚI v1.1] Tượng, ma-nơ-canh, xe trưng bày**: tượng và ma-nơ-canh **không gán**. Xe trưng bày (xe thật, đứng yên trong/trước cửa hàng) **vẫn gán** theo lớp của xe.
 
 ## 4. Ca khó (đã chốt ở calibration)
 
 | Ảnh | Tình huống | Quyết định v1.1 | Quy tắc |
 |---|---|---|---|
-| img_005, img_011, img_016, img_025 | Cùng một xe: car vs van | __ | 2.1 car/van/truck |
-| img_008, img_015, img_028, img_037 | Cùng một xe: car vs truck | __ | 2.1 car/van/truck |
+| img_005, img_011, img_016, img_025 | Cùng một xe: car vs van | Áp dụng 3 câu hỏi ở 2.1; lớp cuối của từng xe ghi trong `calibration_decisions.csv` | 2.1 car/van/truck |
+| img_008, img_015, img_028, img_037 | Cùng một xe: car vs truck | Áp dụng 3 câu hỏi ở 2.1 (xe buýt → car); lớp cuối của từng xe ghi trong `calibration_decisions.csv` | 2.1 car/van/truck |
 | img_008 | Một vật bị gán person ở người này, motorcycle ở người kia (do box người và xe chồng nhau) | Người và xe là 2 box riêng (kiểm tra lại cả hai box có đủ không) | 3.3 |
-| img_008 | Cùng một xe: motorcycle vs truck | __ | 2.1 phương tiện ngoài 6 lớp (xe ba gác?) |
-| img_004 (và các ảnh có tuk-tuk) | Xe tuk-tuk | __ | 2.1 phương tiện ngoài 6 lớp |
-| img_002 | Xe tải chở ô tô | __ | 3.9 |
-| img_005, img_037 | Ca được tick `can_review` | __ | |
-| (điền thêm) | | | |
+| img_008 | Cùng một xe: motorcycle vs truck | Nếu là xe ba gác/xe máy chế chở hàng → `motorcycle`; nếu là xe tải → `truck` | 2.1 phương tiện ngoài 6 lớp |
+| img_004 (và các ảnh có tuk-tuk) | Xe tuk-tuk | Không gán xe; người trên xe vẫn gán `person` | 2.1 phương tiện ngoài 6 lớp |
+| img_002 | Xe tải chở ô tô | Mỗi xe một box riêng | 3.9 |
+| img_005, img_037 | Ca được tick `can_review` | Xử lý theo quy tắc v1.1 tương ứng; quyết định từng box ghi trong `calibration_decisions.csv` | 2.1, 2.3 |
 
 ## 5. QC và phiên bản
 
@@ -130,4 +121,4 @@ Lệch thuộc tính là nguồn lệch lớn thứ hai (120 ca lệch `occluded
 |---|---|---|---|
 | v0 | — | Bản giảng viên | — |
 | v1.0 | 16/11 | Định nghĩa lớp, ngưỡng occluded 10/40/80%, 7 quy tắc vẽ box | Hợp nhất guideline cá nhân 182, 184, 207, 213 |
-| v1.1 | 17/11 | Cây phân biệt car/van/truck; quy ước mốc ranh giới và cách ước lượng occluded; ngưỡng 20 px cho ignore_region; quy tắc chống bỏ sót; box person/motorcycle; xe chở xe; vật nhoè; tượng/xe trưng bày; phương tiện ngoài 6 lớp | Calibration: IoU 0.826, occluded khớp 48.5%, 138 bỏ sót/thừa, 11 lệch lớp (35/40 ảnh) |
+| v1.1 | 17/11 | Cây phân biệt car/van/truck (xe buýt → car); mốc ranh giới occluded thuộc mức cao hơn, mẹo chia người 3 phần, kính tính là che, phân vân chọn mức cao hơn; ngưỡng 20 px cho ignore_region; quy tắc chống bỏ sót; box person/motorcycle; xe chở xe mỗi xe một box; vật nhoè → ignore_region; tượng/ma-nơ-canh không gán, xe trưng bày gán; tuk-tuk và xe đạp không gán, xe ba gác → motorcycle | Calibration: IoU 0.826, occluded khớp 48.5%, 138 bỏ sót/thừa, 11 lệch lớp (35/40 ảnh) |
