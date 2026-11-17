@@ -15,14 +15,16 @@ Danh sách trên phải khớp dòng tiêu đề của `README.md` (đã đổi 
 
 ## Phân công (mỗi người làm gì ngoài phần gán nhãn)
 
-| MSHV | Phụ trách thêm |
+| Mã thành viên | Phụ trách thêm |
 |---|---|
-| | (ví dụ: chạy split_assign, viết phần ca khó của guideline v1.0, người kiểm QC chính, ...) |
+|184| chạy split_assign, người kiểm QC chính,viết guideline v1.0 sau khi thống nhất |
+|213| viết, cập nhật calibration_decisions.csvt|
+|207| cập nhật guildline v1.1 sau khi thống nhất, viết, cập nhật QC_rp sau khi thống nhất|
 
 ## Kết quả tóm tắt (điền cuối bài)
 
-- Số thành viên / số lần gán mỗi ảnh (K): …
-- IAA trước calibration: IoU trung bình … , đồng thuận lớp … % (mẫu số: …)
-- Số ảnh phải calibration: … / 40
-- Tỉ lệ lỗi sau calibration: … % theo ảnh (…/…), … % theo đối tượng (…/…)
-- **Quyết định:** Release / Hold / Rework — lý do một dòng: …
+- Số thành viên / số lần gán mỗi ảnh (K): 4/2
+- IAA trước calibration: IoU trung bình 0.826 , đồng thuận lớp 95.3 % 
+- Số ảnh phải calibration: 35 / 40
+
+- **Quyết định:** Release / Hold / Rework — lý do một dòng: Rework, vì nhóm quyết dịnh bỏ gán xe tuk tuk là car, và sửa lại các nhãn lệch, chưa khớp
